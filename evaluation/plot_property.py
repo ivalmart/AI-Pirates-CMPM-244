@@ -478,7 +478,7 @@ def main():
         id, case_name = log_filename[:-4].split('_')
         dataset.append((int(id), case_name, LogData.from_file(os.path.join(dirname, log_filename))))
     # dataset.sort(key=lambda it: it[0])
-    # plot_prop(Property.FinalPlayerHealth, dataset, plot_histplot_gen('Card'))
+    plot_prop(Property.FinalPlayerHealth, dataset, plot_histplot_gen('Card'))
     # plot_prop(Property.SufferChooseChance, dataset, plot_histplot_gen('Card'))
     # plot_prop(Property.BombCount, dataset, plot_histplot_gen('Card'))
     # plot_prop(Property.ToleranceCombo, dataset, plot_freq_stackbar_gen('BotName', 1))
@@ -487,7 +487,7 @@ def main():
     # plot_prop(Property.BombTurn, dataset, plot_freq_stackbar_gen('BotName', 10))
     # plot_prop(Property.BatterStimulateCombo, dataset, plot_freq_stackbar_gen('BotName', 1))
     # plot_prop(Property.DecisionCount, dataset, plot_histplot_gen('Card'))
-    # plot_prop(Property.TurnCount, dataset, plot_freq_stackbar_gen(2))
+    plot_prop(Property.TurnCount, dataset, plot_freq_stackbar_gen(2))
     # plot_prop_2d(Property.FinalPlayerHealth, Property.DecisionCount, dataset, plot_scatter_2d)
     # plot_prop_2d(Property.FinalPlayerHealth, Property.DecisionCount, dataset, plot_density_2d)
 
