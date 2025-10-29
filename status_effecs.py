@@ -1,5 +1,12 @@
 from __future__ import annotations
-from enum import StrEnum, Enum
+from enum import Enum
+try:
+    # Python 3.11+ provides StrEnum
+    from enum import StrEnum
+except Exception:
+    # Minimal backport for older Python versions
+    class StrEnum(str, Enum):
+        pass
 from config import MAX_STATUS
 from typing import Callable
 from typing import TYPE_CHECKING

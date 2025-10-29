@@ -2,7 +2,12 @@ from __future__ import annotations
 import openai
 import time
 import json
-from enum import StrEnum
+from enum import Enum
+try:
+    from enum import StrEnum
+except Exception:
+    class StrEnum(str, Enum):
+        pass
 from ggpa.ggpa import GGPA
 from action.action import EndAgentTurn, PlayCard
 from auth import GPT_AUTH

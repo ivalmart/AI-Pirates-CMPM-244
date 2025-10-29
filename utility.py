@@ -1,4 +1,4 @@
-from typing import TypeVar, Generic
+from typing import TypeVar, Generic, Union
 from typing import Callable
 import random
 import os.path
@@ -10,7 +10,7 @@ class ItemSet(Generic[T]):
         pass
 
     def __init__(self):
-        self.cur: T|None = None
+        self.cur: Union[T, None] = None
 
     def _sample(self) -> T:
         raise NotImplementedError("The \"_sample\" method is not implemented for {}.".format(self.__class__.__name__))
@@ -46,15 +46,15 @@ class RoundRobinRandomStart(RoundRobinCore[T]):
         self.index = random.randrange(0, len(self.values))
 
 class ItemSequence(ItemSet[T]):
-    def __init__(self, *item_sets: ItemSet[T]|T):
+    def __init__(self, *item_sets: Union[ItemSet[T], T]):
         super().__init__()
-        self.item_set_list: list[ItemSet[T]|T] = [item_set for item_set in item_sets]
+        self.item_set_list: list[Union[ItemSet[T], T]] = [item_set for item_set in item_sets]
         self.index = 0
     
     def _sample(self) -> T:
         while self.index < len(self.item_set_list):
             try:
-                value:T|ItemSet[T] = self.item_set_list[self.index]
+                value: Union[T, ItemSet[T]] = self.item_set_list[self.index]
                 if isinstance(value, ItemSet):
                     item_set: ItemSet[T] = value
                     return item_set.get()
