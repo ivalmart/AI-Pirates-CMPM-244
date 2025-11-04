@@ -202,58 +202,56 @@ class CardRepo:
 def main():
     card_dict = {}
 
-    # with open('generated_cards/ancient_block_2.json') as f: 
-    # with open('generated_cards/ancient_think_7.json') as f:
-    # with open('generated_cards/chilling_parry_13.json') as f:
-    with open('generated_cards/test_cards/guard.json') as f:
-        card = json.load(f)
+    directory = 'generated_cards/test_cards'
+    for file in os.listdir(directory):
+        with open(os.path.join(directory, file)) as f:
+            card_json = json.load(f)
 
-        # Card format: Card(name, card type, mana cost, player, rarity, action)
-        generated_card = lambda: Card(card['name'], CardType[card['type'].upper()], ConstValue(card['cost']), Character.IRON_CLAD, Rarity[card['rarity'].upper()], generated_actions(card['effects']))
-        print(generated_card())
+            print(card_json['name'])
+            # Lambda needs local loop variables to bind it so it doesn't copy for later lambda calls
+            generated_card = (lambda card=card_json: Card(
+                # Card format: Card(name, card type, mana cost, player, rarity, action)
+                card['name'],
+                CardType[card['type'].upper()],
+                ConstValue(card['cost']),
+                Character.IRON_CLAD,
+                Rarity[card['rarity'].upper()],
+                generated_actions(card['effects'])
+            ))
 
-        card_dict[card['name']] = generated_card
+            card_dict[card_json['name']] = generated_card
 
-        # print(CardGen.Strike())
-        # CardGen.Strike = generated_card
-        # print(CardGen.Strike())
-
-
-    # directory = 'generated_cards'
-    # for file in os.listdir(directory):
-    #     with open(os.path.join(directory, file)) as f:
-
-    #         d = json.load(f)
-    #         print('this tile is:')
-    #         print(d)
+    print("Generated Cards:", len(card_dict), "\n")
+    for gen_card in card_dict:
+        key = card_dict[gen_card]
+        print(key())
 
 # Given the card, we attempt to translate action description -> executable actions
 # def generated_actions(effects):
 def generated_actions(effects):
     # each effect has 3 fields, actions, target, and value
     # sometimes there will be a status
-    num = 0
-
     for effect in effects:
-        print(num + 1, 'effect:')
-        # exec = assign_action(effect['action'], effect['value']).assign_target(effect['target'])
-        # if(effect['action'] == 'DealAttackDamage'):
-        #     exec = DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target']))
         if(effect['action'] == 'GainBlock'):
             exec = AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target']))
-
-        print(exec)
-        # print(effect)
-        # effect['actions']
+        elif(effect['action'] == 'DealAttackDamage'):
+            exec = DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target']))
+        elif(effect['action'] == 'ApplyStatus'):
+            exec = ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target']))
 
     return exec
-    # return DealAttackDamage(UpgradableOnce(6, 9)).To(ChooseAgentTarget(AgentSet.ENEMY))
 
 def assign_target(t):
     if(t == 'SELF'):
         return SelfAgentTarget()
     if(t == 'ENEMY'):
         return ChooseAgentTarget(AgentSet.ENEMY)
+    
+def assign_status(s):
+    if(s == 'Vulnerable'):
+        return StatusEffectRepo.VULNERABLE
+    if(s == 'Weak'):
+        return StatusEffectRepo.WEAK
 
 if __name__ == '__main__':
     main()
