@@ -1,0 +1,14 @@
+{
+  "name": "Guard",
+  "type": "Skill",
+  "cost": 1,
+  "rarity": "Common",
+  "description": "Gain 5 Block.",
+  "effects": [
+    {
+      "action": "GainBlock",
+      "value": 5,
+      "target": "SELF"
+    }
+  ]
+}

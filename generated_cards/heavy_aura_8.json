@@ -1,0 +1,16 @@
+{
+  "name": "Heavy Aura",
+  "type": "Power",
+  "cost": 4,
+  "rarity": "Rare",
+  "description": "Apply 3 Strength.",
+  "effects": [
+    {
+      "action": "ApplyStatus",
+      "value": 3,
+      "target": "SELF",
+      "status": "Strength"
+    }
+  ],
+  "keywords": []
+}

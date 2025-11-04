@@ -9,6 +9,9 @@ from status_effecs import StatusEffectRepo, StatusEffectDefinition
 from value import Value, ConstValue, UpgradableOnce, LinearUpgradable
 from utility import RandomStr
 from typing import TYPE_CHECKING, Callable
+import json
+import os
+
 if TYPE_CHECKING:
     from game import GameState
     from battle import BattleState
@@ -174,6 +177,14 @@ class CardRepo:
         deck += [CardGen.Suffer()]
         return "basics-suffer", deck
     
+    # CMPM 244 Card Implementation
+    @staticmethod
+    def get_scenario_gen1() -> tuple[str, list[Card]]:
+        deck: list[Card] = []
+        return "pcg-deck", deck
+        # for _ in range(10):
+        #     deck.append(CardRepo.get_random()())
+    
     @staticmethod
     def anonymize_scenario(scenario: tuple[str, list[Card]]) -> tuple[str, list[Card]]:
         name, cards = scenario
@@ -185,3 +196,64 @@ class CardRepo:
         for card in cards:
             card.name = RandomStr.get_hashed(card.name)
         return cards
+    
+# CMPM 244 Card Implementation
+# TODO: make a class? of these generated cards to allow for multiple duplicates chosen in the generated deck
+def main():
+    card_dict = {}
+
+    # with open('generated_cards/ancient_block_2.json') as f: 
+    # with open('generated_cards/ancient_think_7.json') as f:
+    # with open('generated_cards/chilling_parry_13.json') as f:
+    with open('generated_cards/test_cards/guard.json') as f:
+        card = json.load(f)
+
+        # Card format: Card(name, card type, mana cost, player, rarity, action)
+        generated_card = lambda: Card(card['name'], CardType[card['type'].upper()], ConstValue(card['cost']), Character.IRON_CLAD, Rarity[card['rarity'].upper()], generated_actions(card['effects']))
+        print(generated_card())
+
+        card_dict[card['name']] = generated_card
+
+        # print(CardGen.Strike())
+        # CardGen.Strike = generated_card
+        # print(CardGen.Strike())
+
+
+    # directory = 'generated_cards'
+    # for file in os.listdir(directory):
+    #     with open(os.path.join(directory, file)) as f:
+
+    #         d = json.load(f)
+    #         print('this tile is:')
+    #         print(d)
+
+# Given the card, we attempt to translate action description -> executable actions
+# def generated_actions(effects):
+def generated_actions(effects):
+    # each effect has 3 fields, actions, target, and value
+    # sometimes there will be a status
+    num = 0
+
+    for effect in effects:
+        print(num + 1, 'effect:')
+        # exec = assign_action(effect['action'], effect['value']).assign_target(effect['target'])
+        # if(effect['action'] == 'DealAttackDamage'):
+        #     exec = DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target']))
+        if(effect['action'] == 'GainBlock'):
+            exec = AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target']))
+
+        print(exec)
+        # print(effect)
+        # effect['actions']
+
+    return exec
+    # return DealAttackDamage(UpgradableOnce(6, 9)).To(ChooseAgentTarget(AgentSet.ENEMY))
+
+def assign_target(t):
+    if(t == 'SELF'):
+        return SelfAgentTarget()
+    if(t == 'ENEMY'):
+        return ChooseAgentTarget(AgentSet.ENEMY)
+
+if __name__ == '__main__':
+    main()
