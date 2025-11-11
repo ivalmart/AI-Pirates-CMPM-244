@@ -38,6 +38,9 @@ class AddMana(Action):
     
     def play(self, by: Agent, game_state: GameState, battle_state: BattleState) -> None:
         battle_state.add_to_mana(self.val.get())
+    
+    def __repr__(self) -> str:
+        return f"Add {self.val.get()} Mana to your mana pool"
 
 # Added Draw Functionality for 244 (inspured by Markus's CMPM 146 Class Assignment)
 class DrawCard(Action):
@@ -51,9 +54,9 @@ class DrawCard(Action):
 
     def __repr__(self) -> str:
         if(self.val.get() == 1):
-            return "Draw a card"
+            return "Draw a card to your hand"
         else:
-            return f"Draw {self.val.get()} cards"
+            return f"Draw {self.val.get()} cards to your hand"
 
 class PlayCard(Action):
     def __init__(self, card_index: int):

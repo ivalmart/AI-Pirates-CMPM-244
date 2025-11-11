@@ -256,6 +256,8 @@ def generated_actions(effects):
                 # exec_actions.add(DrawCard(ConstValue(effect['value'])))
                 exec = DrawCard(ConstValue(effect['value']))
             # exec = DrawCard(ConstValue(effect['value'])) if exec is None else exec.And(DrawCard(ConstValue(effect['value'])))
+        elif(effect['action'] == 'AddMana'):
+                exec = AddMana(ConstValue(effect['value']))
 
         # elif()drawing cards
         # if num of cards is 5, i -> 5, exec = draw card
