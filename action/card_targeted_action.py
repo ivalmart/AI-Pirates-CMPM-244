@@ -113,9 +113,9 @@ class DiscardCard(CardTargetedL2):
         pass
         # battle_state.discard(target)
 
-class DrawCard(CardTargetedL2):
-    def __init__(self):
-        super().__init__()
+# class DrawCard(CardTargetedL2):
+#     def __init__(self):
+#         super().__init__()
 
-    def play(self, by: Agent, game_state: GameState, battle_state: BattleState, target: Card) -> None:
-        pass
+#     def play(self, by: Agent, game_state: GameState, battle_state: BattleState, target: Card) -> None:
+#         pass

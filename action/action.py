@@ -1,5 +1,5 @@
 from __future__ import annotations
-from value import Value
+from value import Value, ConstValue
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from battle import BattleState
@@ -38,6 +38,22 @@ class AddMana(Action):
     
     def play(self, by: Agent, game_state: GameState, battle_state: BattleState) -> None:
         battle_state.add_to_mana(self.val.get())
+
+# Added Draw Functionality for 244 (inspured by Markus's CMPM 146 Class Assignment)
+class DrawCard(Action):
+    def __init__(self, val: Value = ConstValue(1)):
+        super().__init__(val)
+        self.val = val
+    
+    def play(self, by: Agent, game_state: GameState, battle_state: BattleState) -> None:
+        for _ in range(self.val.get()):
+            battle_state.draw_one()
+
+    def __repr__(self) -> str:
+        if(self.val.get() == 1):
+            return "Draw a card"
+        else:
+            return f"Draw {self.val.get()} cards"
 
 class PlayCard(Action):
     def __init__(self, card_index: int):

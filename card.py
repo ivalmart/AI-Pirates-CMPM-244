@@ -1,7 +1,7 @@
 from __future__ import annotations
 from target.agent_target import AgentSet, ChooseAgentTarget, SelfAgentTarget, AllAgentsTarget, RandomAgentTarget
 from target.card_target import CardPile, SelfCardTarget, ChooseCardTarget
-from action.action import Action, AddMana
+from action.action import Action, AddMana, DrawCard
 from action.agent_targeted_action import DealAttackDamage, ApplyStatus, AddBlock, Heal
 from action.card_targeted_action import CardTargetedL1, Exhaust, AddCopy, UpgradeCard, DiscardCard
 from config import CardType, Character, Rarity
@@ -78,6 +78,8 @@ class CardGen:
     Tolerate = lambda: Card("Tolerate", CardType.POWER, ConstValue(3), Character.IRON_CLAD, Rarity.COMMON, ApplyStatus(ConstValue(1), StatusEffectRepo.TOLERANCE).To(SelfAgentTarget()), desc="Gain 1 block every turn and increase this gain by 2.")
     Bomb = lambda: Card("Bomb", CardType.SKILL, ConstValue(2), Character.IRON_CLAD, Rarity.COMMON, ApplyStatus(ConstValue(3), StatusEffectRepo.BOMB).To(SelfAgentTarget()), desc="At the end of 3 turns, deal 40 damage to all enemies.")
     Suffer = lambda: Card("Suffer", CardType.ATTACK, ConstValue(1), Character.IRON_CLAD, Rarity.STARTER, DealAttackDamage(UpgradableOnce(15, 30)).To(ChooseAgentTarget(AgentSet.ENEMY)))
+    # 244 Test Cards
+    Thinking = lambda: Card("Thinking", CardType.SKILL, ConstValue(1), Character.IRON_CLAD, Rarity.UNCOMMON, DrawCard(ConstValue(2)))
 
 class CardRepo:
     @staticmethod
@@ -132,9 +134,10 @@ class CardRepo:
     def get_starter(character: Character) -> list[Card]:
         starter: list[Card] = []
         if character == Character.IRON_CLAD:
-            starter += [CardGen.Strike() for _ in range(5)]
+            starter += [CardGen.Strike() for _ in range(4)] #originally 5
             starter += [CardGen.Defend() for _ in range(4)]
             starter += [CardGen.Bash() for _ in range(1)]
+            starter += [CardGen.Thinking() for _ in range(1)]
             return starter
         else:
             raise Exception("Undefined started deck for character {}.".format(character))
@@ -231,14 +234,32 @@ def main():
 def generated_actions(effects):
     # each effect has 3 fields, actions, target, and value
     # sometimes there will be a status
+    # exec_actions = set()
+
+    indicator = 0
     for effect in effects:
+        indicator += 1            
         if(effect['action'] == 'GainBlock'):
+            # exec_actions.add(AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target'])))                
             exec = AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target']))
+            # exec = exec.And(AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target'])))
         elif(effect['action'] == 'DealAttackDamage'):
+            # exec_actions.add(DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])))
+            # exec = DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])) if exec is None else exec.And(DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])))
             exec = DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target']))
         elif(effect['action'] == 'ApplyStatus'):
+            # exec_actions.add(ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target'])))
+            # exec = ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target'])) if exec is None else exec.And(ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target'])))
             exec = ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target']))
+        elif(effect['action'] == 'DrawCard'):
+            if(effect['target'] == 'SELF'):
+                # exec_actions.add(DrawCard(ConstValue(effect['value'])))
+                exec = DrawCard(ConstValue(effect['value']))
+            # exec = DrawCard(ConstValue(effect['value'])) if exec is None else exec.And(DrawCard(ConstValue(effect['value'])))
 
+        # elif()drawing cards
+        # if num of cards is 5, i -> 5, exec = draw card
+    # return exec_actions
     return exec
 
 def assign_target(t):

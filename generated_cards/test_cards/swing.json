@@ -2,7 +2,7 @@
   "name": "Swing",
   "type": "Attack",
   "cost": 2,
-  "rarity": "Common",
+  "rarity": "Uncommon",
   "description": "Deal 7 Damage to Enemy",
   "effects": [
     {
