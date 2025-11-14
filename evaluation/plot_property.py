@@ -3,7 +3,12 @@ import seaborn as sns
 import argparse
 import os
 from matplotlib import pyplot as plt
-from enum import StrEnum
+from enum import Enum
+try:
+    from enum import StrEnum
+except Exception:
+    class StrEnum(str, Enum):
+        pass
 import numpy as np
 from typing import Callable
 import sys

@@ -1,5 +1,12 @@
 from __future__ import annotations
-from enum import StrEnum, Enum
+from enum import Enum
+try:
+    # Python 3.11+
+    from enum import StrEnum
+except Exception:
+    # Minimal fallback for StrEnum on older Pythons
+    class StrEnum(str, Enum):
+        pass
 from config import MAX_STATUS
 from typing import Callable
 from typing import TYPE_CHECKING
@@ -13,7 +20,7 @@ class StatusEffectDefinition:
                  stack: Callable[[list[StatusEffectObject]], list[bool]],
                  end_turn: Callable[[StatusEffectObject], None],
                  done: Callable[[StatusEffectObject], bool],
-                 repr: Callable[[StatusEffectObject], str]|None):
+                 repr: Optional[Callable[[StatusEffectObject], str]] = None):
         self.name = name
         self.stack = stack
         self.end_turn = end_turn
