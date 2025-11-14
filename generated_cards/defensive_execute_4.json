@@ -1,0 +1,15 @@
+{
+  "name": "Defensive Execute",
+  "type": "Attack",
+  "cost": 3,
+  "rarity": "Uncommon",
+  "description": "Deal 13 damage.",
+  "effects": [
+    {
+      "action": "DealAttackDamage",
+      "value": 13,
+      "target": "ENEMY"
+    }
+  ],
+  "keywords": []
+}

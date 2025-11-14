@@ -12,8 +12,8 @@ from ggpa.random_bot import RandomBot
 # from ggpa.backtrack_parallel import BacktrackParallelBot
 
 def main():
-    # agent = HumanInput(True)
-    agent = RandomBot()
+    agent = HumanInput(True)
+    # agent = RandomBot()
     # agent = BacktrackBot(4, False)
     # agent = ChatGPTBot(ChatGPTBot.ModelName.GPT_Turbo_35, PromptOption.CoT, 0, False, 1)
     game_state = GameState(Character.IRON_CLAD, agent, 0)

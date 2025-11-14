@@ -1,10 +1,17 @@
 from __future__ import annotations
 from enum import Enum
 try:
+<<<<<<< HEAD
     # Python 3.11+ provides StrEnum
     from enum import StrEnum
 except Exception:
     # Minimal backport for older Python versions
+=======
+    # Python 3.11+
+    from enum import StrEnum
+except Exception:
+    # Minimal fallback for StrEnum on older Pythons
+>>>>>>> Ivan
     class StrEnum(str, Enum):
         pass
 from config import MAX_STATUS
@@ -20,7 +27,7 @@ class StatusEffectDefinition:
                  stack: Callable[[list[StatusEffectObject]], list[bool]],
                  end_turn: Callable[[StatusEffectObject], None],
                  done: Callable[[StatusEffectObject], bool],
-                 repr: Callable[[StatusEffectObject], str]|None):
+                 repr: Optional[Callable[[StatusEffectObject], str]] = None):
         self.name = name
         self.stack = stack
         self.end_turn = end_turn

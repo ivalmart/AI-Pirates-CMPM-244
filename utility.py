@@ -1,5 +1,4 @@
-from typing import TypeVar, Generic, Union
-from typing import Callable
+from typing import TypeVar, Generic, Callable, Optional, Union
 import random
 import os.path
 
@@ -10,7 +9,7 @@ class ItemSet(Generic[T]):
         pass
 
     def __init__(self):
-        self.cur: Union[T, None] = None
+        self.cur: Optional[T] = None
 
     def _sample(self) -> T:
         raise NotImplementedError("The \"_sample\" method is not implemented for {}.".format(self.__class__.__name__))

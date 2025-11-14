@@ -1,0 +1,15 @@
+{
+  "name": "Chilling Parry",
+  "type": "Skill",
+  "cost": 1,
+  "rarity": "Common",
+  "description": "Gain 6 Block.",
+  "effects": [
+    {
+      "action": "GainBlock",
+      "value": 6,
+      "target": "SELF"
+    }
+  ],
+  "keywords": []
+}
