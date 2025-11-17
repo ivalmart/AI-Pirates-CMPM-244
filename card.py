@@ -182,11 +182,13 @@ class CardRepo:
     
     # CMPM 244 Card Implementation
     @staticmethod
-    def get_scenario_gen1() -> tuple[str, list[Card]]:
+    def get_generated_scenario() -> tuple[str, list[Card]]:
         deck: list[Card] = []
+        gen_cards = custom_card_generation()
+        for card in gen_cards:
+            deck += [card for _ in range(2)] # two copies of each generated card
+        print("Generated Deck:", deck)
         return "pcg-deck", deck
-        # for _ in range(10):
-        #     deck.append(CardRepo.get_random()())
     
     @staticmethod
     def anonymize_scenario(scenario: tuple[str, list[Card]]) -> tuple[str, list[Card]]:
@@ -203,6 +205,10 @@ class CardRepo:
 # CMPM 244 Card Implementation
 # TODO: make a class? of these generated cards to allow for multiple duplicates chosen in the generated deck
 def main():
+    cards = custom_card_generation()
+    print("Testing Generated Cards:", cards)
+
+def custom_card_generation():
     card_dict = {}
 
     directory = 'generated_cards/test_cards'
@@ -210,10 +216,10 @@ def main():
         with open(os.path.join(directory, file)) as f:
             card_json = json.load(f)
 
-            print(card_json['name'])
+            # print(card_json['name'])
             # Lambda needs local loop variables to bind it so it doesn't copy for later lambda calls
+            # Card format: Card(name, card type, mana cost, player, rarity, action)
             generated_card = (lambda card=card_json: Card(
-                # Card format: Card(name, card type, mana cost, player, rarity, action)
                 card['name'],
                 CardType[card['type'].upper()],
                 ConstValue(card['cost']),
@@ -222,59 +228,47 @@ def main():
                 generated_actions(card['effects'])
             ))
 
+            # print(generated_card.get_name())
             card_dict[card_json['name']] = generated_card
 
-    print("Generated Cards:", len(card_dict), "\n")
-    for gen_card in card_dict:
-        key = card_dict[gen_card]
-        print(key())
+    return card_dict
 
 # Given the card, we attempt to translate action description -> executable actions
-# def generated_actions(effects):
+# Card JSON Format: Action, Value, Target, (Status)
 def generated_actions(effects):
-    # each effect has 3 fields, actions, target, and value
-    # sometimes there will be a status
-    # exec_actions = set()
-
-    indicator = 0
+    exec = None
     for effect in effects:
-        indicator += 1            
-        if(effect['action'] == 'GainBlock'):
-            # exec_actions.add(AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target'])))                
-            exec = AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target']))
-            # exec = exec.And(AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target'])))
-        elif(effect['action'] == 'DealAttackDamage'):
-            # exec_actions.add(DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])))
-            # exec = DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])) if exec is None else exec.And(DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])))
-            exec = DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target']))
-        elif(effect['action'] == 'ApplyStatus'):
-            # exec_actions.add(ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target'])))
-            # exec = ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target'])) if exec is None else exec.And(ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target'])))
-            exec = ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target']))
-        elif(effect['action'] == 'DrawCard'):
-            if(effect['target'] == 'SELF'):
-                # exec_actions.add(DrawCard(ConstValue(effect['value'])))
-                exec = DrawCard(ConstValue(effect['value']))
-            # exec = DrawCard(ConstValue(effect['value'])) if exec is None else exec.And(DrawCard(ConstValue(effect['value'])))
-        elif(effect['action'] == 'AddMana'):
-                exec = AddMana(ConstValue(effect['value']))
-
-        # elif()drawing cards
-        # if num of cards is 5, i -> 5, exec = draw card
-    # return exec_actions
+        match effect['action'].upper():
+            case "GAINBLOCK":
+                exec = AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target'])) if exec is None else exec.And(AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target'])))
+            case "DEALATTACKDAMAGE":
+                exec = DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])) if exec is None else exec.And(DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])))
+            case "APPLYSTATUS":
+                exec = ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target'])) if exec is None else exec.And(ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target'])))
+            case "DRAWCARD":
+                if(effect['target'].upper() == 'SELF'):
+                    exec = DrawCard(ConstValue(effect['value'])) if exec is None else exec.And(DrawCard(ConstValue(effect['value'])))
+            case "ADDMANA":
+                exec = AddMana(ConstValue(effect['value'])) if exec is None else exec.And(AddMana(ConstValue(effect['value'])))
     return exec
 
 def assign_target(t):
-    if(t == 'SELF'):
+    if(t.upper() == 'SELF'):
         return SelfAgentTarget()
-    if(t == 'ENEMY'):
+    if(t.upper() == 'ENEMY'):
         return ChooseAgentTarget(AgentSet.ENEMY)
     
 def assign_status(s):
-    if(s == 'Vulnerable'):
+    if(s.upper() == 'VULNERABLE'):
         return StatusEffectRepo.VULNERABLE
-    if(s == 'Weak'):
+    if(s.upper() == 'WEAK'):
         return StatusEffectRepo.WEAK
+    if(s.upper() == 'STRENGTH'):
+        return StatusEffectRepo.STRENGTH
+    if(s.upper() == 'VIGOR'):
+        return StatusEffectRepo.VIGOR
+    if(s.upper() == 'TOLERANCE'):
+        return StatusEffectRepo.TOLERANCE
 
 if __name__ == '__main__':
     main()

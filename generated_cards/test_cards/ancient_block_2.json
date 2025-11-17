@@ -1,0 +1,20 @@
+{
+  "name": "Ancient Block",
+  "type": "Skill",
+  "cost": 3,
+  "rarity": "Uncommon",
+  "description": "Gain 10 Block. Draw 1 card.",
+  "effects": [
+    {
+      "action": "GainBlock",
+      "value": 10,
+      "target": "SELF"
+    },
+    {
+      "action": "DrawCard",
+      "value": 1,
+      "target": "SELF"
+    }
+  ],
+  "keywords": []
+}

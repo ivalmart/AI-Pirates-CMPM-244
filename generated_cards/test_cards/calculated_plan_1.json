@@ -1,0 +1,21 @@
+{
+  "name": "Calculated Plan",
+  "type": "Skill",
+  "cost": 3,
+  "rarity": "Rare",
+  "description": "Gain 11 Block. Apply 2 Strength.",
+  "effects": [
+    {
+      "action": "GainBlock",
+      "value": 11,
+      "target": "SELF"
+    },
+    {
+      "action": "ApplyStatus",
+      "value": 2,
+      "target": "SELF",
+      "status": "Strength"
+    }
+  ],
+  "keywords": []
+}
