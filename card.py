@@ -185,9 +185,9 @@ class CardRepo:
     def get_generated_scenario() -> tuple[str, list[Card]]:
         deck: list[Card] = []
         gen_cards = custom_card_generation()
-        for card in gen_cards:
-            deck += [card for _ in range(2)] # two copies of each generated card
-        print("Generated Deck:", deck)
+        # Current implementation, 20 uniquely generated cards for a deck size of 20
+        for card in gen_cards.values():
+            deck += [card() for _ in range(1)] # one copy of each generated card
         return "pcg-deck", deck
     
     @staticmethod
@@ -202,8 +202,7 @@ class CardRepo:
             card.name = RandomStr.get_hashed(card.name)
         return cards
     
-# CMPM 244 Card Implementation
-# TODO: make a class? of these generated cards to allow for multiple duplicates chosen in the generated deck
+# CMPM 244 Card Generation -> Executable Card Implementation
 def main():
     cards = custom_card_generation()
     print("Testing Generated Cards:", cards)
@@ -211,12 +210,11 @@ def main():
 def custom_card_generation():
     card_dict = {}
 
-    directory = 'generated_cards/test_cards'
+    directory = 'GIGL/generated_cards' # NOTE: ensure this path is correct based on where the generated cards are stored, will fail if no cards are generated beforehand
     for file in os.listdir(directory):
         with open(os.path.join(directory, file)) as f:
             card_json = json.load(f)
 
-            # print(card_json['name'])
             # Lambda needs local loop variables to bind it so it doesn't copy for later lambda calls
             # Card format: Card(name, card type, mana cost, player, rarity, action)
             generated_card = (lambda card=card_json: Card(
@@ -228,28 +226,43 @@ def custom_card_generation():
                 generated_actions(card['effects'])
             ))
 
-            # print(generated_card.get_name())
             card_dict[card_json['name']] = generated_card
 
     return card_dict
 
 # Given the card, we attempt to translate action description -> executable actions
 # Card JSON Format: Action, Value, Target, (Status)
+# Currently Supported Actions:
+# * Deal Damage
+# * Draw Card
+# * Discard Card
+# * Apply status ailment
+# * - weak, vulnerable, vigor, strength
+# * GainBlock
+# * Exhaust
+# * Heal
+# * Mana
 def generated_actions(effects):
     exec = None
     for effect in effects:
         match effect['action'].upper():
-            case "GAINBLOCK":
-                exec = AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target'])) if exec is None else exec.And(AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target'])))
-            case "DEALATTACKDAMAGE":
-                exec = DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])) if exec is None else exec.And(DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])))
+            case "ADDMANA":
+                exec = AddMana(ConstValue(effect['value'])) if exec is None else exec.And(AddMana(ConstValue(effect['value'])))
             case "APPLYSTATUS":
                 exec = ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target'])) if exec is None else exec.And(ApplyStatus(ConstValue(effect['value']), assign_status(effect['status'])).To(assign_target(effect['target'])))
+            case "DEALATTACKDAMAGE":
+                exec = DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])) if exec is None else exec.And(DealAttackDamage(ConstValue(effect['value'])).To(assign_target(effect['target'])))
+            case "DISCARDCARD":
+                exec = DiscardCard().To(assign_target(effect['target'])) if exec is None else exec.And(DiscardCard().To(assign_target(effect['target'])))
             case "DRAWCARD":
                 if(effect['target'].upper() == 'SELF'):
                     exec = DrawCard(ConstValue(effect['value'])) if exec is None else exec.And(DrawCard(ConstValue(effect['value'])))
-            case "ADDMANA":
-                exec = AddMana(ConstValue(effect['value'])) if exec is None else exec.And(AddMana(ConstValue(effect['value'])))
+            case "EXHAUST":
+                exec = Exhaust().To(assign_target(effect['target'])) if exec is None else exec.And(Exhaust().To(assign_target(effect['target'])))
+            case "GAINBLOCK":
+                exec = AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target'])) if exec is None else exec.And(AddBlock(ConstValue(effect['value'])).To(assign_target(effect['target'])))
+            case "HEAL":
+                exec = Heal(ConstValue(effect['value'])).To(assign_target(effect['target'])) if exec is None else exec.And(Heal(ConstValue(effect['value'])).To(assign_target(effect['target'])))
     return exec
 
 def assign_target(t):

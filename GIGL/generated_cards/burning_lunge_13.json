@@ -1,12 +1,12 @@
 {
-  "name": "Insightful Slash",
+  "name": "Burning Lunge",
   "type": "Attack",
   "cost": 1,
   "rarity": "Common",
   "effects": [
     {
       "action": "Dealattackdamage",
-      "value": 6,
+      "value": 5,
       "target": "Enemy"
     }
   ]

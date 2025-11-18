@@ -1,12 +1,12 @@
 {
-  "name": "Careful Bash",
+  "name": "Forgotten Rampage",
   "type": "Attack",
   "cost": 2,
-  "rarity": "Uncommon",
+  "rarity": "Common",
   "effects": [
     {
       "action": "Dealattackdamage",
-      "value": 12,
+      "value": 9,
       "target": "Enemy"
     }
   ]

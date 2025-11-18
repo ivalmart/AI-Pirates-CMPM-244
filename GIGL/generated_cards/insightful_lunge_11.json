@@ -1,12 +1,12 @@
 {
-  "name": "Insightful Slash",
+  "name": "Insightful Lunge",
   "type": "Attack",
   "cost": 1,
   "rarity": "Common",
   "effects": [
     {
       "action": "Dealattackdamage",
-      "value": 6,
+      "value": 7,
       "target": "Enemy"
     }
   ]

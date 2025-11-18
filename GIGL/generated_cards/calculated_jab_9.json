@@ -1,12 +1,12 @@
 {
-  "name": "Careful Bash",
+  "name": "Calculated Jab",
   "type": "Attack",
-  "cost": 2,
-  "rarity": "Uncommon",
+  "cost": 1,
+  "rarity": "Common",
   "effects": [
     {
       "action": "Dealattackdamage",
-      "value": 12,
+      "value": 8,
       "target": "Enemy"
     }
   ]

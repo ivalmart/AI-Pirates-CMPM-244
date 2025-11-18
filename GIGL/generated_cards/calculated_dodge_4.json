@@ -1,12 +1,12 @@
 {
-  "name": "Quick Prepare",
+  "name": "Calculated Dodge",
   "type": "Skill",
   "cost": 1,
   "rarity": "Common",
   "effects": [
     {
       "action": "Gainblock",
-      "value": 5,
+      "value": 7,
       "target": "Self"
     }
   ]
