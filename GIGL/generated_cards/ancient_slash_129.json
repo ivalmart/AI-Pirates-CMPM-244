@@ -1,0 +1,19 @@
+{
+  "name": "Ancient Slash",
+  "type": "Attack",
+  "cost": 3,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 8,
+      "target": "Enemy"
+    },
+    {
+      "action": "Applystatus",
+      "value": 3,
+      "target": "Enemy",
+      "status": "Weak"
+    }
+  ]
+}

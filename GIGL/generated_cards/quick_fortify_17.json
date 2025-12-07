@@ -1,0 +1,13 @@
+{
+  "name": "Quick Fortify",
+  "type": "Skill",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Gainblock",
+      "value": 13,
+      "target": "Self"
+    }
+  ]
+}

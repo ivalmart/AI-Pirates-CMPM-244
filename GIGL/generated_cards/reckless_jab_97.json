@@ -1,0 +1,13 @@
+{
+  "name": "Reckless Jab",
+  "type": "Attack",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 10,
+      "target": "Enemy"
+    }
+  ]
+}

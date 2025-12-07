@@ -1,0 +1,19 @@
+{
+  "name": "Shielding Block",
+  "type": "Skill",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Applystatus",
+      "value": 1,
+      "target": "Enemy",
+      "status": "Vigor"
+    },
+    {
+      "action": "Drawcard",
+      "value": 1,
+      "target": "Self"
+    }
+  ]
+}

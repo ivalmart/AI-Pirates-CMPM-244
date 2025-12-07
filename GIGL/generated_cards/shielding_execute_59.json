@@ -1,0 +1,13 @@
+{
+  "name": "Shielding Execute",
+  "type": "Attack",
+  "cost": 1,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 8,
+      "target": "Enemy"
+    }
+  ]
+}

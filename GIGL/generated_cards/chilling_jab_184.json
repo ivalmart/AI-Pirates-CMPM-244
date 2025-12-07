@@ -1,0 +1,19 @@
+{
+  "name": "Chilling Jab",
+  "type": "Attack",
+  "cost": 3,
+  "rarity": "Rare",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 13,
+      "target": "Enemy"
+    },
+    {
+      "action": "Applystatus",
+      "value": 1,
+      "target": "Enemy",
+      "status": "Vulnerable"
+    }
+  ]
+}

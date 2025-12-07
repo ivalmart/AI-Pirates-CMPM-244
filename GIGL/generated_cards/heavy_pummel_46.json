@@ -1,0 +1,13 @@
+{
+  "name": "Heavy Pummel",
+  "type": "Attack",
+  "cost": 1,
+  "rarity": "Rare",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 8,
+      "target": "Enemy"
+    }
+  ]
+}

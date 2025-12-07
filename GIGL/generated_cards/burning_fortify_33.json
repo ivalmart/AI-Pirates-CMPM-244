@@ -1,0 +1,13 @@
+{
+  "name": "Burning Fortify",
+  "type": "Skill",
+  "cost": 3,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Drawcard",
+      "value": 2,
+      "target": "Self"
+    }
+  ]
+}

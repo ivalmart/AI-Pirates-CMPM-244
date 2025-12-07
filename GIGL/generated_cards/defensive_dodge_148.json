@@ -1,0 +1,19 @@
+{
+  "name": "Defensive Dodge",
+  "type": "Skill",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Applystatus",
+      "value": 2,
+      "target": "Enemy",
+      "status": "Vulnerable"
+    },
+    {
+      "action": "Drawcard",
+      "value": 1,
+      "target": "Self"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Honed Strike",
+  "type": "Attack",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 8,
+      "target": "Enemy"
+    },
+    {
+      "action": "Drawcard",
+      "value": 1,
+      "target": "Self"
+    }
+  ]
+}

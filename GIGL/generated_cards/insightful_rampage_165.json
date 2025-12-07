@@ -1,0 +1,19 @@
+{
+  "name": "Insightful Rampage",
+  "type": "Attack",
+  "cost": 3,
+  "rarity": "Rare",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 10,
+      "target": "Enemy"
+    },
+    {
+      "action": "Applystatus",
+      "value": 2,
+      "target": "Enemy",
+      "status": "Vulnerable"
+    }
+  ]
+}

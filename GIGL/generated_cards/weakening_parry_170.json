@@ -1,0 +1,14 @@
+{
+  "name": "Weakening Parry",
+  "type": "Skill",
+  "cost": 1,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Applystatus",
+      "value": 3,
+      "target": "Enemy",
+      "status": "Vulnerable"
+    }
+  ]
+}

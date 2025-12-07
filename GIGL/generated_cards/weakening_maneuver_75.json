@@ -1,0 +1,13 @@
+{
+  "name": "Weakening Maneuver",
+  "type": "Skill",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Gainblock",
+      "value": 10,
+      "target": "Self"
+    }
+  ]
+}

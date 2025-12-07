@@ -1,0 +1,13 @@
+{
+  "name": "Insightful Maneuver",
+  "type": "Skill",
+  "cost": 3,
+  "rarity": "Rare",
+  "effects": [
+    {
+      "action": "Drawcard",
+      "value": 3,
+      "target": "Self"
+    }
+  ]
+}

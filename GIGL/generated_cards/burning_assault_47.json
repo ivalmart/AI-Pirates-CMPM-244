@@ -1,0 +1,19 @@
+{
+  "name": "Burning Assault",
+  "type": "Attack",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 8,
+      "target": "Enemy"
+    },
+    {
+      "action": "Applystatus",
+      "value": 1,
+      "target": "Enemy",
+      "status": "Weak"
+    }
+  ]
+}

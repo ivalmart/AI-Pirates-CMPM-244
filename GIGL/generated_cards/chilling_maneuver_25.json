@@ -1,0 +1,13 @@
+{
+  "name": "Chilling Maneuver",
+  "type": "Skill",
+  "cost": 3,
+  "rarity": "Rare",
+  "effects": [
+    {
+      "action": "Addmana",
+      "value": 2,
+      "target": "Self"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Heavy Plan",
+  "type": "Skill",
+  "cost": 1,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Gainblock",
+      "value": 8,
+      "target": "Self"
+    }
+  ]
+}

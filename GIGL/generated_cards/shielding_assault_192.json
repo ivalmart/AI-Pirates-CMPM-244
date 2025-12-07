@@ -1,0 +1,13 @@
+{
+  "name": "Shielding Assault",
+  "type": "Attack",
+  "cost": 2,
+  "rarity": "Rare",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 11,
+      "target": "Enemy"
+    }
+  ]
+}

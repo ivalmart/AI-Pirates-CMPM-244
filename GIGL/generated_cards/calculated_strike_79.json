@@ -1,0 +1,19 @@
+{
+  "name": "Calculated Strike",
+  "type": "Attack",
+  "cost": 3,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 9,
+      "target": "Enemy"
+    },
+    {
+      "action": "Applystatus",
+      "value": 3,
+      "target": "Enemy",
+      "status": "Vulnerable"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Ancient Setup",
+  "type": "Skill",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Applystatus",
+      "value": 2,
+      "target": "Enemy",
+      "status": "Vigor"
+    },
+    {
+      "action": "Addmana",
+      "value": 1,
+      "target": "Self"
+    }
+  ]
+}

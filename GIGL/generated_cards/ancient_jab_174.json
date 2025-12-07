@@ -1,0 +1,19 @@
+{
+  "name": "Ancient Jab",
+  "type": "Attack",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 6,
+      "target": "Enemy"
+    },
+    {
+      "action": "Applystatus",
+      "value": 2,
+      "target": "Enemy",
+      "status": "Vigor"
+    }
+  ]
+}

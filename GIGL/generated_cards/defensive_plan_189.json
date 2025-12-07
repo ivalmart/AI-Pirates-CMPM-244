@@ -1,0 +1,13 @@
+{
+  "name": "Defensive Plan",
+  "type": "Skill",
+  "cost": 3,
+  "rarity": "Rare",
+  "effects": [
+    {
+      "action": "Gainblock",
+      "value": 19,
+      "target": "Self"
+    }
+  ]
+}

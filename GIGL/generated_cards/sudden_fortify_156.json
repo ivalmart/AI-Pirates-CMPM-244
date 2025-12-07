@@ -1,0 +1,13 @@
+{
+  "name": "Sudden Fortify",
+  "type": "Skill",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Gainblock",
+      "value": 12,
+      "target": "Self"
+    }
+  ]
+}

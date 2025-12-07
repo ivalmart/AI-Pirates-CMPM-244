@@ -1,0 +1,13 @@
+{
+  "name": "Defensive Setup",
+  "type": "Skill",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Addmana",
+      "value": 1,
+      "target": "Self"
+    }
+  ]
+}

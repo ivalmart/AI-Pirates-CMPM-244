@@ -1,0 +1,19 @@
+{
+  "name": "Reckless Rampage",
+  "type": "Attack",
+  "cost": 3,
+  "rarity": "Rare",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 8,
+      "target": "Enemy"
+    },
+    {
+      "action": "Applystatus",
+      "value": 3,
+      "target": "Enemy",
+      "status": "Vulnerable"
+    }
+  ]
+}

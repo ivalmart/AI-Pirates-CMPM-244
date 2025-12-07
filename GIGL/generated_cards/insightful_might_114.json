@@ -1,0 +1,14 @@
+{
+  "name": "Insightful Might",
+  "type": "Power",
+  "cost": 3,
+  "rarity": "Rare",
+  "effects": [
+    {
+      "action": "Applystatus",
+      "value": 3,
+      "target": "Self",
+      "status": "Strength"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Forgotten Jab",
+  "type": "Attack",
+  "cost": 1,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 5,
+      "target": "Enemy"
+    }
+  ]
+}

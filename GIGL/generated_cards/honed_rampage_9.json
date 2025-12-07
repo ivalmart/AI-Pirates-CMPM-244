@@ -1,0 +1,18 @@
+{
+  "name": "Honed Rampage",
+  "type": "Attack",
+  "cost": 3,
+  "rarity": "Rare",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 9,
+      "target": "Enemy"
+    },
+    {
+      "action": "Gainblock",
+      "value": 13,
+      "target": "Self"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Ancient Block",
+  "type": "Skill",
+  "cost": 3,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Drawcard",
+      "value": 3,
+      "target": "Self"
+    }
+  ]
+}

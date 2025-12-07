@@ -1,0 +1,13 @@
+{
+  "name": "Defensive Strike",
+  "type": "Attack",
+  "cost": 1,
+  "rarity": "Common",
+  "effects": [
+    {
+      "action": "Dealattackdamage",
+      "value": 6,
+      "target": "Enemy"
+    }
+  ]
+}

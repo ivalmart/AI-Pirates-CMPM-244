@@ -1,0 +1,13 @@
+{
+  "name": "Defensive Dodge",
+  "type": "Skill",
+  "cost": 1,
+  "rarity": "Common",
+  "effects": [
+    {
+      "action": "Gainblock",
+      "value": 5,
+      "target": "Self"
+    }
+  ]
+}

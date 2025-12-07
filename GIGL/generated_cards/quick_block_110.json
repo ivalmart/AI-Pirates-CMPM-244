@@ -1,0 +1,19 @@
+{
+  "name": "Quick Block",
+  "type": "Skill",
+  "cost": 2,
+  "rarity": "Uncommon",
+  "effects": [
+    {
+      "action": "Applystatus",
+      "value": 2,
+      "target": "Enemy",
+      "status": "Weak"
+    },
+    {
+      "action": "Addmana",
+      "value": 1,
+      "target": "Self"
+    }
+  ]
+}

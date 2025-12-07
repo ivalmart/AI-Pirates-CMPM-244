@@ -1,0 +1,14 @@
+{
+  "name": "Weakening Focus",
+  "type": "Power",
+  "cost": 2,
+  "rarity": "Rare",
+  "effects": [
+    {
+      "action": "Applystatus",
+      "value": 1,
+      "target": "Self",
+      "status": "Strength"
+    }
+  ]
+}
