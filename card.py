@@ -11,6 +11,7 @@ from utility import RandomStr
 from typing import TYPE_CHECKING, Callable
 import json
 import os
+import random
 
 if TYPE_CHECKING:
     from game import GameState
@@ -185,9 +186,16 @@ class CardRepo:
     def get_generated_scenario() -> tuple[str, list[Card]]:
         deck: list[Card] = []
         gen_cards = custom_card_generation()
-        # Current implementation, 20 uniquely generated cards for a deck size of 20
-        for card in gen_cards.values():
-            deck += [card() for _ in range(1)] # one copy of each generated card
+
+        deckSize = len(gen_cards)
+        if deckSize < 20:
+            raise ValueError(f"Generation Error: There must be at LEAST 20 cards to generate, currently only {deckSize} available.")
+        
+        # Choosing 20 unique cards from generated list out of X generated cards (must have at least 20 to choose from)
+        selected_generators = random.sample(list(gen_cards.values()), 20)
+        for card in selected_generators:
+            deck += [card() for _ in range(1)] # one copy of each selected card
+        
         return "pcg-deck", deck
     
     @staticmethod
