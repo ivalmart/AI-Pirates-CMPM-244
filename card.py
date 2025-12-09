@@ -187,13 +187,13 @@ class CardRepo:
         deck: list[Card] = []
         gen_cards = custom_card_generation()
 
-        deckSize = len(gen_cards)
-        if deckSize < 20:
-            raise ValueError(f"Generation Error: There must be at LEAST 20 cards to generate, currently only {deckSize} available.")
+        # Making sure that we have at least 20 generated cards to make a complete 20-card deck. If more are made, then we get to choose randomly from the pool
+        if(len(gen_cards) < 20):
+            raise ValueError(f"Generation Error: There must be at LEAST 20 cards to generate, currently only {len(gen_cards)} available.")
         
         # Choosing 20 unique cards from generated list out of X generated cards (must have at least 20 to choose from)
-        selected_generators = random.sample(list(gen_cards.values()), 20)
-        for card in selected_generators:
+        selected_cards = random.sample(list(gen_cards.values()), 20)
+        for card in selected_cards:
             deck += [card() for _ in range(1)] # one copy of each selected card
         
         return "pcg-deck", deck
